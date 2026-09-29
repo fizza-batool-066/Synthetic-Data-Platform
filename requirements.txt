@@ -1,0 +1,59 @@
+# requirements.txt
+# Node.js dependency list for the Synthetic Data Platform.
+# (The brief asked for a Python requirements.txt; this project runs on
+# Next.js 16 + TypeScript instead, so this lists the npm packages.)
+# Install with: bun install   (or: npm install)
+
+# --- Core framework ---
+next@^16.1.1
+react@^19.0.0
+react-dom@^19.0.0
+typescript@^5
+
+# --- Styling & UI ---
+tailwindcss@^4
+@tailwindcss/postcss@^4
+tw-animate-css@^1.3.5
+# shadcn/ui primitives (Radix UI) — see package.json for the full list
+lucide-react@^0.525.0
+class-variance-authority@^0.7.1
+clsx@^2.1.1
+tailwind-merge@^3.3.1
+sonner@^2.0.6
+framer-motion@^12.23.2
+
+# --- Database ---
+prisma@^6.11.1
+@prisma/client@^6.11.1
+
+# --- Data generation & parsing ---
+@faker-js/faker            # realistic locale-aware fake data
+papaparse                  # CSV parsing
+@types/papaparse
+
+# --- PDF generation ---
+jspdf                      # PDF documents (invoices, bank statements)
+jspdf-autotable            # PDF tables
+
+# --- Auth ---
+bcryptjs                   # password hashing
+@types/bcryptjs
+jsonwebtoken               # session JWTs
+@types/jsonwebtoken
+
+# --- State & data fetching ---
+zustand@^5.0.6
+@tanstack/react-query@^5.82.0
+
+# --- Forms & validation ---
+react-hook-form@^7.60.0
+@hookform/resolvers@^5.1.1
+zod@^4.0.2
+
+# --- Charts ---
+recharts@^2.15.4
+
+# --- AI ---
+z-ai-web-dev-sdk@^0.0.18   # built-in AI (no key needed)
+# Groq is used via its OpenAI-compatible HTTP endpoint (no package needed);
+# set GROQ_API_KEY in .env or in the Settings page.

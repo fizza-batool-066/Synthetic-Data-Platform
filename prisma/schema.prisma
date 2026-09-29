@@ -1,0 +1,52 @@
+// Prisma schema for the Synthetic Data Platform.
+// We use MongoDB (Atlas) so data is stored in your cluster, not a local file.
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// A registered user. Passwords are hashed with bcrypt (never stored in plain text).
+model User {
+  id           String   @id @default(cuid()) @map("_id")
+  email        String   @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  settings Settings?
+  recipes  Recipe[]
+}
+
+// Per-user AI provider settings. The API key is stored here (server-side only)
+// and is NEVER sent to the browser. The frontend only ever sees provider/model.
+model Settings {
+  id        String   @id @default(cuid()) @map("_id")
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // "zai" (built-in, no key) | "groq" (user key)
+  provider  String   @default("zai")
+  model     String   @default("default")
+  // Stored as-is in the DB but only ever read by the backend, never returned
+  // to the client. (In production you'd encrypt this at rest too.)
+  apiKey    String?
+  updatedAt DateTime @updatedAt
+}
+
+// A saved "recipe": the trends/rules used to generate a dataset, as JSON.
+// Lets users reload a configuration later without re-typing everything.
+model Recipe {
+  id        String   @id @default(cuid()) @map("_id")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  // JSON string of the full plan/rules object.
+  recipe    String
+  createdAt DateTime @default(now())
+}
