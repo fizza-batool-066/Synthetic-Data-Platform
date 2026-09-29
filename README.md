@@ -199,3 +199,10 @@ prisma/schema.prisma  # User, Settings, Recipe models
 ---
 
 Built for a hackathon with care for realism and privacy. 🛡️
+
+
+**Built by Team:** Code Brigade 
+## Team Members 
+- Fizza Batool 
+- Hoorain Malik 
+- Hira Anfal
